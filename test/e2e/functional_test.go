@@ -189,6 +189,36 @@ spec:
 		})
 }
 
+func (s *FunctionalSuite) TestVolumeClaimTemplate() {
+	s.Given().
+		Workflow(`@testdata/volume-claim-template-workflow.yaml`).
+		When().
+		SubmitWorkflow().
+		WaitForWorkflow().
+		Then().
+		// test that the PVC was deleted (because the `kubernetes.io/pvc-protection` finalizer was deleted)
+		ExpectWorkflow(func(t *testing.T, metadata *metav1.ObjectMeta, status *wfv1.WorkflowStatus) {
+			ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+			defer cancel()
+			ticker := time.NewTicker(time.Second)
+			defer ticker.Stop()
+			for {
+				select {
+				case <-ctx.Done():
+					t.Error("timeout waiting for PVC to be deleted")
+					t.FailNow()
+				case <-ticker.C:
+					list, err := s.KubeClient.CoreV1().PersistentVolumeClaims(fixtures.Namespace).List(context.Background(), metav1.ListOptions{})
+					if assert.NoError(t, err) {
+						if len(list.Items) == 0 {
+							return
+						}
+					}
+				}
+			}
+		})
+}
+
 func (s *FunctionalSuite) TestEventOnNodeFailSentAsPod() {
 	// Test whether an WorkflowFailed event (with appropriate message) is emitted in case of node failure
 	var uid types.UID
@@ -196,11 +226,14 @@ func (s *FunctionalSuite) TestEventOnNodeFailSentAsPod() {
 	var nodeName string
 	// Update controller config map to set nodeEvents.sendAsPod to true
 	ctx := context.Background()
-	configMap, _ := s.KubeClient.CoreV1().ConfigMaps("argo").Get(
+	configMap, err := s.KubeClient.CoreV1().ConfigMaps(fixtures.Namespace).Get(
 		ctx,
 		"workflow-controller-configmap",
 		metav1.GetOptions{},
 	)
+	if err != nil {
+		s.T().Fatal(err)
+	}
 	originalData := make(map[string]string)
 	for key, value := range configMap.Data {
 		originalData[key] = value
@@ -838,6 +871,168 @@ spec:
 		WaitForWorkflow(fixtures.ToBeSucceeded)
 }
 
+func (s *FunctionalSuite) TestPauseBefore() {
+	s.Given().
+		Workflow(`@functional/pause-before.yaml`).
+		When().
+		SubmitWorkflow().
+		WaitForWorkflow(fixtures.ToBeRunning).
+		Exec("bash", []string{"-c", "sleep 5 &&  kubectl exec -i $(kubectl get pods | awk '/pause-before/ {print $1;exit}') -c main -- bash -c 'touch /proc/1/root/run/argo/ctr/main/before'"}, fixtures.NoError).
+		WaitForWorkflow(fixtures.ToBeSucceeded)
+}
+
+func (s *FunctionalSuite) TestPauseAfter() {
+	s.Given().
+		Workflow(`@functional/pause-after.yaml`).
+		When().
+		SubmitWorkflow().
+		WaitForWorkflow(fixtures.ToBeRunning).
+		Exec("bash", []string{"-c", "sleep 5 && kubectl exec -i $(kubectl get pods -n argo | awk '/pause-after/ {print $1;exit}') -c main -- bash -c 'touch /proc/1/root/run/argo/ctr/main/after'"}, fixtures.NoError).
+		WaitForWorkflow(fixtures.ToBeSucceeded)
+}
+
+func (s *FunctionalSuite) TestPauseAfterAndBefore() {
+	s.Given().
+		Workflow(`@functional/pause-before-after.yaml`).
+		When().
+		SubmitWorkflow().
+		WaitForWorkflow(fixtures.ToBeRunning).
+		Exec("bash", []string{"-c", "sleep 5 && kubectl exec -i $(kubectl get pods | awk '/pause-before-after/ {print $1;exit}') -c main -- bash -c 'touch /proc/1/root/run/argo/ctr/main/before'"}, fixtures.NoError).
+		Exec("bash", []string{"-c", "kubectl exec -i $(kubectl get pods | awk '/pause-before-after/ {print $1;exit}') -c main -- bash -c 'touch /proc/1/root/run/argo/ctr/main/after'"}, fixtures.NoError).
+		WaitForWorkflow(fixtures.ToBeSucceeded)
+}
+
 func TestFunctionalSuite(t *testing.T) {
 	suite.Run(t, new(FunctionalSuite))
+}
+
+func (s *FunctionalSuite) TestStepLevelMemozie() {
+	s.Given().
+		Workflow(`apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: steps-memozie-
+spec:
+  entrypoint: hello-hello-hello
+  templates:
+    - name: hello-hello-hello
+      steps:
+        - - name: hello1
+            template: memostep
+            arguments:
+              parameters: [{name: message, value: "hello1"}]
+        - - name: hello2a
+            template: memostep
+            arguments:
+              parameters: [{name: message, value: "hello1"}]
+    - name: memostep
+      inputs:
+        parameters:
+        - name: message
+      memoize:
+        key: "{{inputs.parameters.message}}"
+        maxAge: "10s"
+        cache:
+          configMap:
+            name: my-config-memo-step
+      steps:
+      - - name: cache
+          template: whalesay
+          arguments:
+            parameters: [{name: message, value: "{{inputs.parameters.message}}"}]
+      outputs:
+        parameters:
+        - name: output
+          valueFrom:
+            Parameter: "{{steps.cache.outputs.result}}"
+    - name: whalesay
+      inputs:
+        parameters:
+        - name: message
+      container:
+        image: argoproj/argosay:v2
+        command: [echo]
+        args: ["{{inputs.parameters.message}}"]
+`).
+		When().
+		SubmitWorkflow().
+		WaitForWorkflow(fixtures.ToBeSucceeded).
+		Then().
+		ExpectWorkflow(func(t *testing.T, _ *metav1.ObjectMeta, status *wfv1.WorkflowStatus) {
+			memoHit := false
+			for _, node := range status.Nodes {
+				if node.MemoizationStatus != nil && node.MemoizationStatus.Hit {
+					memoHit = true
+				}
+			}
+			assert.True(t, memoHit)
+
+		})
+
+}
+
+func (s *FunctionalSuite) TestDAGLevelMemozie() {
+	s.Given().
+		Workflow(`apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: steps-memozie-
+spec:
+  entrypoint: hello-hello-hello
+  templates:
+    - name: hello-hello-hello
+      steps:
+        - - name: hello1
+            template: memostep
+            arguments:
+              parameters: [{name: message, value: "hello1"}]
+        - - name: hello2a
+            template: memostep
+            arguments:
+              parameters: [{name: message, value: "hello1"}]
+    - name: memostep
+      inputs:
+        parameters:
+        - name: message
+      memoize:
+        key: "{{inputs.parameters.message}}"
+        maxAge: "10s"
+        cache:
+          configMap:
+            name: my-config-memo-dag
+      dag:
+        tasks:
+        - name: cache
+          template: whalesay
+          arguments:
+            parameters: [{name: message, value: "{{inputs.parameters.message}}"}]
+      outputs:
+        parameters:
+        - name: output
+          valueFrom:
+            Parameter: "{{tasks.cache.outputs.result}}"
+    - name: whalesay
+      inputs:
+        parameters:
+        - name: message
+      container:
+        image: argoproj/argosay:v2
+        command: [echo]
+        args: ["{{inputs.parameters.message}}"]
+`).
+		When().
+		SubmitWorkflow().
+		WaitForWorkflow(fixtures.ToBeSucceeded).
+		Then().
+		ExpectWorkflow(func(t *testing.T, _ *metav1.ObjectMeta, status *wfv1.WorkflowStatus) {
+			memoHit := false
+			for _, node := range status.Nodes {
+				if node.MemoizationStatus != nil && node.MemoizationStatus.Hit {
+					memoHit = true
+				}
+			}
+			assert.True(t, memoHit)
+
+		})
+
 }

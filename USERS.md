@@ -37,6 +37,7 @@ Currently, the following organizations are **officially** using Argo Workflows:
 1. [Capital One](https://www.capitalone.com/tech/)
 1. [Carrefour](https://www.carrefour.com/)
 1. [CarTrack](https://www.cartrack.com/)
+1. [Casavo](https://casavo.com/)
 1. [CCRi](https://www.ccri.com/)
 1. [Cisco](https://www.cisco.com/)
 1. [CloudSeeds](https://www.cloudseeds.de/)
@@ -148,6 +149,7 @@ Currently, the following organizations are **officially** using Argo Workflows:
 1. [WooliesX](https://wooliesx.com.au/)
 1. [Woolworths Group](https://www.woolworthsgroup.com.au/)
 1. [Workiva](https://www.workiva.com/)
+1. [Voyager](https://investvoyager.com/)
 1. [Zhihu](https://www.zhihu.com/)
 
 ### Projects Using Argo
