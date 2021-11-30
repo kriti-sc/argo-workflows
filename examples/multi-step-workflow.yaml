@@ -1,0 +1,58 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: steps-
+spec:
+  arguments: {}
+  entrypoint: hello-hello-hello
+  templates:
+  - inputs: {}
+    metadata: {}
+    name: hello-hello-hello
+    outputs: {}
+    steps:
+    - - arguments:
+          parameters:
+          - name: message
+            value: hello1
+        name: hello1
+        template: whalesay
+    - - arguments:
+          parameters:
+          - name: message
+            value: hello2a
+        name: hello2a
+        template: whalesay
+      - arguments:
+          parameters:
+          - name: message
+            value: hello2b
+        name: hello2b
+        template: intentional-fail
+        continueOn:
+          exitCode: 0
+    - - arguments:
+          parameters:
+          - name: message
+            value: hello3
+        name: hello3
+        template: whalesay
+  - container:
+      args:
+      - '{{inputs.parameters.message}}'
+      command:
+      - cowsay
+      image: docker/whalesay
+      name: ""
+      resources: {}
+    inputs:
+      parameters:
+      - name: message
+    metadata: {}
+    name: whalesay
+    outputs: {}
+  - container:
+      image: alpine:latest
+      command: [sh, -c]
+      args: ["echo intentional failure; exit 9"]
+    name: intentional-fail

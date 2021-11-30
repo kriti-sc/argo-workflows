@@ -219,6 +219,7 @@ argoexec-image:
 %-image:
 	[ ! -e dist/$* ] || mv dist/$* .
 	docker buildx install
+	docker buildx create --use
 	docker build \
 		-t $(IMAGE_NAMESPACE)/$*:$(VERSION) \
 		--target $* \

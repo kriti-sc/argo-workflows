@@ -738,6 +738,8 @@ func (d *dagContext) evaluateDependsLogic(taskName string) (bool, bool, error) {
 		anySucceeded := false
 		allFailed := false
 
+		depNode.
+
 		if depNode.Type == wfv1.NodeTypeTaskGroup {
 
 			allFailed = len(depNode.Children) > 0
@@ -759,6 +761,8 @@ func (d *dagContext) evaluateDependsLogic(taskName string) (bool, bool, error) {
 			AllFailed:    allFailed,
 		}
 	}
+
+	depNode.Ou
 
 	evalLogic := strings.Replace(d.GetTaskDependsLogic(taskName), "-", "_", -1)
 	result, err := expr.Eval(evalLogic, evalScope)

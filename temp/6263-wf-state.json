@@ -1,0 +1,207 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "argoproj.io/v1alpha1",
+            "kind": "Workflow",
+            "metadata": {
+                "creationTimestamp": "2021-09-12T07:42:05Z",
+                "generateName": "synchronization-wf-level-2-",
+                "generation": 2,
+                "labels": {
+                    "workflows.argoproj.io/phase": "Pending"
+                },
+                "name": "synchronization-wf-level-2-snfsg",
+                "namespace": "argo",
+                "resourceVersion": "8992830",
+                "selfLink": "/apis/argoproj.io/v1alpha1/namespaces/argo/workflows/synchronization-wf-level-2-snfsg",
+                "uid": "dda8c7d4-5bda-4b62-b05e-491fe89acee4"
+            },
+            "spec": {
+                "activeDeadlineSeconds": 300,
+                "arguments": {},
+                "entrypoint": "whalesay",
+                "podSpecPatch": "terminationGracePeriodSeconds: 3\n",
+                "synchronization": {
+                    "mutex": {
+                        "name": "test"
+                    }
+                },
+                "templates": [
+                    {
+                        "container": {
+                            "args": [
+                                "hello world"
+                            ],
+                            "command": [
+                                "cowsay"
+                            ],
+                            "image": "docker/whalesay:latest",
+                            "name": "",
+                            "resources": {}
+                        },
+                        "inputs": {},
+                        "metadata": {},
+                        "name": "whalesay",
+                        "outputs": {}
+                    }
+                ],
+                "ttlStrategy": {
+                    "secondsAfterCompletion": 600
+                }
+            },
+            "status": {
+                "artifactRepositoryRef": {
+                    "artifactRepository": {
+                        "archiveLogs": true,
+                        "s3": {
+                            "accessKeySecret": {
+                                "key": "accesskey",
+                                "name": "my-minio-cred"
+                            },
+                            "bucket": "my-bucket",
+                            "endpoint": "minio:9000",
+                            "insecure": true,
+                            "secretKeySecret": {
+                                "key": "secretkey",
+                                "name": "my-minio-cred"
+                            }
+                        }
+                    },
+                    "configMap": "artifact-repositories",
+                    "key": "default-v1",
+                    "namespace": "argo"
+                },
+                "finishedAt": null,
+                "message": "Waiting for argo/Mutex/test lock. Lock status: 0/1 ",
+                "phase": "Pending",
+                "progress": "0/0",
+                "startedAt": null,
+                "synchronization": {
+                    "mutex": {
+                        "waiting": [
+                            {
+                                "holder": "argo/synchronization-wf-level-h7766",
+                                "mutex": "argo/Mutex/test"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "argoproj.io/v1alpha1",
+            "kind": "Workflow",
+            "metadata": {
+                "creationTimestamp": "2021-09-12T07:42:05Z",
+                "generateName": "synchronization-wf-level-",
+                "generation": 4,
+                "labels": {
+                    "workflows.argoproj.io/phase": "Running"
+                },
+                "name": "synchronization-wf-level-h7766",
+                "namespace": "argo",
+                "resourceVersion": "8992835",
+                "selfLink": "/apis/argoproj.io/v1alpha1/namespaces/argo/workflows/synchronization-wf-level-h7766",
+                "uid": "e856ab2a-5197-49e2-897a-e781cdc88b52"
+            },
+            "spec": {
+                "activeDeadlineSeconds": 300,
+                "arguments": {},
+                "entrypoint": "whalesay",
+                "podSpecPatch": "terminationGracePeriodSeconds: 3\n",
+                "synchronization": {
+                    "mutex": {
+                        "name": "test"
+                    }
+                },
+                "templates": [
+                    {
+                        "container": {
+                            "args": [
+                                "hello world"
+                            ],
+                            "command": [
+                                "cowsay"
+                            ],
+                            "image": "docker/whalesay:latest",
+                            "name": "",
+                            "resources": {}
+                        },
+                        "inputs": {},
+                        "metadata": {},
+                        "name": "whalesay",
+                        "outputs": {}
+                    }
+                ],
+                "ttlStrategy": {
+                    "secondsAfterCompletion": 600
+                }
+            },
+            "status": {
+                "artifactRepositoryRef": {
+                    "artifactRepository": {
+                        "archiveLogs": true,
+                        "s3": {
+                            "accessKeySecret": {
+                                "key": "accesskey",
+                                "name": "my-minio-cred"
+                            },
+                            "bucket": "my-bucket",
+                            "endpoint": "minio:9000",
+                            "insecure": true,
+                            "secretKeySecret": {
+                                "key": "secretkey",
+                                "name": "my-minio-cred"
+                            }
+                        }
+                    },
+                    "configMap": "artifact-repositories",
+                    "key": "default-v1",
+                    "namespace": "argo"
+                },
+                "conditions": [
+                    {
+                        "status": "False",
+                        "type": "PodRunning"
+                    }
+                ],
+                "finishedAt": null,
+                "nodes": {
+                    "synchronization-wf-level-h7766": {
+                        "displayName": "synchronization-wf-level-h7766",
+                        "finishedAt": null,
+                        "hostNodeName": "docker-desktop",
+                        "id": "synchronization-wf-level-h7766",
+                        "message": "ContainerCreating",
+                        "name": "synchronization-wf-level-h7766",
+                        "phase": "Pending",
+                        "progress": "0/1",
+                        "startedAt": "2021-09-12T07:42:05Z",
+                        "templateName": "whalesay",
+                        "templateScope": "local/synchronization-wf-level-h7766",
+                        "type": "Pod"
+                    }
+                },
+                "phase": "Running",
+                "progress": "0/1",
+                "startedAt": "2021-09-12T07:42:05Z",
+                "synchronization": {
+                    "mutex": {
+                        "holding": [
+                            {
+                                "holder": "synchronization-wf-level-h7766",
+                                "mutex": "argo/Mutex/test"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": "",
+        "selfLink": ""
+    }
+}

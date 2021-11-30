@@ -1,0 +1,448 @@
+       logs | GIT_COMMIT=4b5d7ecfd1087f22002bc63658dc5ad3fe30927f GIT_BRANCH=master GIT_TAG=untagged GIT_TREE_STATE=dirty RELEASE_TAG=false DEV_BRANCH=false VERSION=latest
+       logs | KUBECTX=docker-desktop DOCKER_DESKTOP=true K3D=false DOCKER_PUSH=false
+       logs | RUN_MODE=local PROFILE=minimal AUTH_MODE=hybrid SECURE=false STATIC_FILES=true ALWAYS_OFFLOAD_NODE_STATUS=false UPPERIO_DB_DEBUG=0 LOG_LEVEL=debug NAMESPACED=true
+ controller | time="2021-09-11T20:51:45+05:30" level=info msg="index config" indexWorkflowSemaphoreKeys=true
+ controller | time="2021-09-11T20:51:45+05:30" level=info msg="cron config" cronSyncPeriod=10s
+ controller | time="2021-09-11T20:51:45.357Z" level=info msg="not enabling pprof debug endpoints"
+ controller | time="2021-09-11T20:51:45.361Z" level=info msg="config map" name=workflow-controller-configmap
+argo-server | time="2021-09-11T20:51:45.366Z" level=debug msg="CLI version" version="{latest+4b5d7ec.dirty 2021-09-11T15:02:45Z 4b5d7ecfd1087f22002bc63658dc5ad3fe30927f untagged dirty go1.15.4 gc darwin/amd64}"
+argo-server | time="2021-09-11T20:51:45.366Z" level=info msg="not enabling pprof debug endpoints"
+argo-server | time="2021-09-11T20:51:45.370Z" level=info authModes="[hybrid]" baseHRef=/ managedNamespace=argo namespace=argo secure=false
+argo-server | time="2021-09-11T20:51:45.370Z" level=warning msg="You are running in insecure mode. Learn how to enable transport layer security: https://argoproj.github.io/argo-workflows/tls/"
+argo-server | time="2021-09-11T20:51:45.370Z" level=info msg="config map" name=workflow-controller-configmap
+argo-server | time="2021-09-11T20:51:45.370Z" level=info msg="SSO disabled"
+ controller | time="2021-09-11T20:51:45.383Z" level=info msg="Get configmaps 200"
+ controller | time="2021-09-11T20:51:45.392Z" level=info msg="Configuration:\nartifactRepository:\n  s3:\n    accessKeySecret:\n      key: accesskey\n      name: my-minio-cred\n    bucket: my-bucket\n    endpoint: minio:9000\n    insecure: true\n    secretKeySecret:\n      key: secretkey\n      name: my-minio-cred\ncontainerRuntimeExecutor: pns\ncontainerRuntimeExecutors:\n- name: k8sapi\n  selector:\n    matchLabels:\n      workflows.argoproj.io/container-runtime-executor: k8sapi\n- name: emissary\n  selector:\n    matchLabels:\n      workflows.argoproj.io/container-runtime-executor: emissary\nexecutor:\n  imagePullPolicy: Never\n  name: \"\"\n  resources:\n    limits:\n      cpu: 500m\n      memory: 128Mi\n    requests:\n      cpu: 100m\n      memory: 64Mi\nimages:\n  argoproj/argosay:v1:\n    command:\n    - cowsay\n  argoproj/argosay:v2:\n    command:\n    - /argosay\n  docker/whalesay:latest:\n    command:\n    - cowsay\n  python:alpine3.6:\n    command:\n    - python3\ninitialDelay: 0s\nkubeletInsecure: true\nlinks:\n- name: Workflow Link\n  scope: workflow\n  url: http://logging-facility?namespace=${metadata.namespace}&workflowName=${metadata.name}&startedAt=${status.startedAt}&finishedAt=${status.finishedAt}\n- name: Pod Link\n  scope: pod\n  url: http://logging-facility?namespace=${metadata.namespace}&podName=${metadata.name}&startedAt=${status.startedAt}&finishedAt=${status.finishedAt}\n- name: Pod Logs Link\n  scope: pod-logs\n  url: http://logging-facility?namespace=${metadata.namespace}&podName=${metadata.name}&startedAt=${status.startedAt}&finishedAt=${status.finishedAt}\n- name: Event Source Logs Link\n  scope: event-source-logs\n  url: http://logging-facility?namespace=${metadata.namespace}&podName=${metadata.name}&startedAt=${status.startedAt}&finishedAt=${status.finishedAt}\n- name: Sensor Logs Link\n  scope: sensor-logs\n  url: http://logging-facility?namespace=${metadata.namespace}&podName=${metadata.name}&startedAt=${status.startedAt}&finishedAt=${status.finishedAt}\nmetricsConfig:\n  enabled: true\n  path: /metrics\n  port: 9090\nnamespaceParallelism: 10\nnodeEvents: {}\npodSpecLogStrategy: {}\nresourceRateLimit:\n  burst: 1\n  limit: 10\ntelemetryConfig: {}\nworkflowDefaults:\n  metadata:\n    creationTimestamp: null\n  spec:\n    activeDeadlineSeconds: 300\n    arguments: {}\n    podSpecPatch: |\n      terminationGracePeriodSeconds: 3\n    ttlStrategy:\n      secondsAfterCompletion: 600\n  status:\n    finishedAt: null\n    startedAt: null\n"
+ controller | time="2021-09-11T20:51:45.392Z" level=info msg="Persistence configuration disabled"
+ controller | time="2021-09-11T20:51:45.393Z" level=info msg="Starting Workflow Controller" version=latest+4b5d7ec.dirty
+ controller | time="2021-09-11T20:51:45.393Z" level=info msg="Workers: workflow: 32, pod: 32, pod cleanup: 4"
+argo-server | time="2021-09-11T20:51:45.404Z" level=info msg="Starting Argo Server" instanceID= version=latest+4b5d7ec.dirty
+argo-server | time="2021-09-11T20:51:45.404Z" level=info msg="Creating event controller" operationQueueSize=16 workerCount=4
+argo-server | time="2021-09-11T20:51:45.410Z" level=info msg="GRPC Server Max Message Size, MaxGRPCMessageSize, is set" GRPC_MESSAGE_SIZE=104857600
+argo-server | time="2021-09-11T20:51:45.410Z" level=info msg="Argo Server started successfully on http://localhost:2746"
+ controller | time="2021-09-11T20:51:45.411Z" level=info msg="List workflows 200"
+ controller | time="2021-09-11T20:51:45.430Z" level=info msg="Manager initialized successfully"
+ controller | time="2021-09-11T20:51:45.438Z" level=info msg="Watch configmaps 200"
+ controller | time="2021-09-11T20:51:45.443Z" level=info msg="List configmaps 200"
+ controller | time="2021-09-11T20:51:45.444Z" level=info msg="List workflowtemplates 200"
+ controller | time="2021-09-11T20:51:45.447Z" level=debug msg="received config map argo/artifact-repositories update"
+ controller | time="2021-09-11T20:51:45.447Z" level=info msg="List workflowtasksets 200"
+ controller | time="2021-09-11T20:51:45.448Z" level=debug msg="received config map argo/workflow-controller-configmap update"
+ controller | time="2021-09-11T20:51:45.521Z" level=info msg="List configmaps 200"
+ controller | time="2021-09-11T20:51:45.521Z" level=info msg="List workflows 200"
+ controller | time="2021-09-11T20:51:45.685Z" level=info msg="Watch workflowtemplates 200"
+ controller | time="2021-09-11T20:51:45.685Z" level=info msg="Watch workflowtasksets 200"
+ controller | time="2021-09-11T20:51:45.685Z" level=info msg="Watch configmaps 200"
+ controller | time="2021-09-11T20:51:45.685Z" level=info msg="List pods 200"
+ controller | time="2021-09-11T20:51:45.685Z" level=info msg="Watch configmaps 200"
+ controller | time="2021-09-11T20:51:45.685Z" level=info msg="Watch workflows 200"
+ controller | time="2021-09-11T20:51:45.693Z" level=info msg="Watch pods 200"
+ controller | time="2021-09-11T20:51:45.732Z" level=debug msg=CanI name= namespace=argo resource=clusterworkflowtemplates verb=get
+ controller | time="2021-09-11T20:51:45.740Z" level=info msg="Create selfsubjectaccessreviews 201"
+ controller | time="2021-09-11T20:51:45.742Z" level=debug msg=CanI name= namespace=argo resource=clusterworkflowtemplates status="{true false  }" verb=get
+ controller | time="2021-09-11T20:51:45.742Z" level=debug msg=CanI name= namespace=argo resource=clusterworkflowtemplates verb=list
+ controller | time="2021-09-11T20:51:45.748Z" level=info msg="Create selfsubjectaccessreviews 201"
+ controller | time="2021-09-11T20:51:45.748Z" level=debug msg=CanI name= namespace=argo resource=clusterworkflowtemplates status="{true false  }" verb=list
+ controller | time="2021-09-11T20:51:45.748Z" level=debug msg=CanI name= namespace=argo resource=clusterworkflowtemplates verb=watch
+ controller | time="2021-09-11T20:51:45.752Z" level=info msg="Create selfsubjectaccessreviews 201"
+ controller | time="2021-09-11T20:51:45.753Z" level=debug msg=CanI name= namespace=argo resource=clusterworkflowtemplates status="{true false  }" verb=watch
+ controller | I0911 20:51:45.753299   30204 leaderelection.go:243] attempting to acquire leader lease argo/workflow-controller...
+ controller | time="2021-09-11T20:51:45.753Z" level=info msg="Starting prometheus metrics server at localhost:9090/metrics"
+ controller | time="2021-09-11T20:51:45.758Z" level=info msg="Get leases 200"
+ controller | time="2021-09-11T20:51:45.763Z" level=info msg="List clusterworkflowtemplates 200"
+ controller | time="2021-09-11T20:51:45.765Z" level=info msg="Watch clusterworkflowtemplates 200"
+ controller | time="2021-09-11T20:51:45.771Z" level=info msg="Update leases 200"
+ controller | I0911 20:51:45.771856   30204 leaderelection.go:253] successfully acquired lease argo/workflow-controller
+ controller | time="2021-09-11T20:51:45.771Z" level=info msg="new leader" id=local leader=local
+ controller | time="2021-09-11T20:51:45.771Z" level=info msg="started leading" id=local
+ controller | time="2021-09-11T20:51:45.771Z" level=debug msg="Event(v1.ObjectReference{Kind:\"Lease\", Namespace:\"argo\", Name:\"workflow-controller\", UID:\"f584088e-68c7-4f11-b2af-16e6c13a0241\", APIVersion:\"coordination.k8s.io/v1\", ResourceVersion:\"8969996\", FieldPath:\"\"}): type: 'Normal' reason: 'LeaderElection' local became leader"
+ controller | time="2021-09-11T20:51:45.772Z" level=info msg="Persistence disabled - so archived workflow GC disabled - you must restart the controller if you enable this"
+ controller | time="2021-09-11T20:51:45.772Z" level=info msg="Performing periodic GC every 30s"
+ controller | time="2021-09-11T20:51:45.772Z" level=info msg="Starting workflow TTL controller (workflowTTLWorkers 4)"
+ controller | time="2021-09-11T20:51:45.772Z" level=info msg="Started workflow TTL worker"
+ controller | time="2021-09-11T20:51:45.772Z" level=info msg="Starting CronWorkflow controller"
+ controller | time="2021-09-11T20:51:45.772Z" level=debug msg="Syncing all CronWorkflows"
+ controller | time="2021-09-11T20:51:45.772Z" level=debug msg="Check the workflow existence"
+ controller | time="2021-09-11T20:51:45.784Z" level=info msg="Get leases 200"
+ controller | time="2021-09-11T20:51:45.786Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-2-gfvxm for delete in 3m54s"
+ controller | time="2021-09-11T20:51:45.786Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-2-4nzjb for delete in 7m46s"
+ controller | time="2021-09-11T20:51:45.786Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-4k5rq for delete in 2m19s"
+ controller | time="2021-09-11T20:51:45.786Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-ff5jh for delete in 1m59s"
+ controller | time="2021-09-11T20:51:45.786Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-m4lsh for delete in 38s"
+ controller | time="2021-09-11T20:51:45.786Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-g5s97 for delete in 1m52s"
+ controller | time="2021-09-11T20:51:45.786Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-k9ckk for delete in 2m27s"
+ controller | time="2021-09-11T20:51:45.786Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-ml8kh for delete in 29s"
+ controller | time="2021-09-11T20:51:45.787Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-pghmq for delete in 3m47s"
+ controller | time="2021-09-11T20:51:45.787Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-pwm4w for delete in 7m39s"
+ controller | time="2021-09-11T20:51:45.793Z" level=info msg="List workflows 200"
+ controller | time="2021-09-11T20:51:45.794Z" level=info msg="List workflows 200"
+ controller | time="2021-09-11T20:51:45.797Z" level=info msg="Watch workflows 200"
+ controller | time="2021-09-11T20:51:45.798Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-2-gfvxm for delete in 3m54s"
+ controller | time="2021-09-11T20:51:45.798Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-4k5rq for delete in 2m19s"
+ controller | time="2021-09-11T20:51:45.798Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-2-4nzjb for delete in 7m46s"
+ controller | time="2021-09-11T20:51:45.799Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-ff5jh for delete in 1m59s"
+ controller | time="2021-09-11T20:51:45.799Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-g5s97 for delete in 1m52s"
+ controller | time="2021-09-11T20:51:45.799Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-k9ckk for delete in 2m27s"
+ controller | time="2021-09-11T20:51:45.799Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-m4lsh for delete in 38s"
+ controller | time="2021-09-11T20:51:45.799Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-ml8kh for delete in 29s"
+ controller | time="2021-09-11T20:51:45.799Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-pghmq for delete in 3m47s"
+ controller | time="2021-09-11T20:51:45.799Z" level=info msg="List cronworkflows 200"
+ controller | time="2021-09-11T20:51:45.799Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-pwm4w for delete in 7m39s"
+ controller | time="2021-09-11T20:51:45.802Z" level=info msg="Watch workflows 200"
+ controller | time="2021-09-11T20:51:45.806Z" level=info msg="Update leases 200"
+ controller | time="2021-09-11T20:51:45.806Z" level=info msg="Create events 201"
+ controller | time="2021-09-11T20:51:45.806Z" level=info msg="Watch cronworkflows 200"
+ controller | time="2021-09-11T20:51:50.820Z" level=info msg="Get leases 200"
+ controller | time="2021-09-11T20:51:50.835Z" level=info msg="Update leases 200"
+ controller | time="2021-09-11T20:51:55.773Z" level=debug msg="Syncing all CronWorkflows"
+ controller | time="2021-09-11T20:51:55.847Z" level=info msg="Get leases 200"
+ controller | time="2021-09-11T20:51:55.859Z" level=info msg="Update leases 200"
+ controller | time="2021-09-11T20:51:57.193Z" level=info msg="Processing workflow" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.194Z" level=debug msg="Getting the template by name"
+ controller | time="2021-09-11T20:51:57.194Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.194Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.194Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.194Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.194Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.195Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.195Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.208Z" level=info msg="Get configmaps 200"
+ controller | time="2021-09-11T20:51:57.210Z" level=info msg="resolved artifact repository" artifactRepositoryRef="argo/#"
+ controller | time="2021-09-11T20:51:57.210Z" level=debug msg="Added into queue: argo/synchronization-wf-level-68rms" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:51:57.210Z" level=info msg="argo/Mutex/test acquired by argo/synchronization-wf-level-68rms " mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:51:57.210Z" level=info msg="Updated phase  -> Running" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.210Z" level=debug msg="Evaluating node synchronization-wf-level-68rms: template: *v1alpha1.WorkflowStep (whalesay), boundaryID: " namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.210Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.210Z" level=debug msg="Event(v1.ObjectReference{Kind:\"Workflow\", Namespace:\"argo\", Name:\"synchronization-wf-level-68rms\", UID:\"b0204bbd-f87e-4363-a478-1a1f5c29597c\", APIVersion:\"argoproj.io/v1alpha1\", ResourceVersion:\"8970020\", FieldPath:\"\"}): type: 'Normal' reason: 'WorkflowRunning' Workflow Running"
+ controller | time="2021-09-11T20:51:57.210Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.210Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.210Z" level=debug msg="Initializing node synchronization-wf-level-68rms: template: *v1alpha1.WorkflowStep (whalesay), boundaryID: " namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.210Z" level=info msg="Pod node synchronization-wf-level-68rms initialized Pending" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.210Z" level=debug msg="Executing node synchronization-wf-level-68rms with container template: whalesay\n" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.210Z" level=debug namespace=argo needLocation=true workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.212Z" level=debug msg="Creating Pod: synchronization-wf-level-68rms (synchronization-wf-level-68rms)" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.227Z" level=info msg="Create events 201"
+ controller | time="2021-09-11T20:51:57.246Z" level=info msg="Create pods 201"
+ controller | time="2021-09-11T20:51:57.254Z" level=info msg="Created pod: synchronization-wf-level-68rms (synchronization-wf-level-68rms)" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.254Z" level=info msg="TaskSet Reconciliation" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.254Z" level=info msg=reconcileAgentPod namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.255Z" level=debug msg="Log changes patch: {\"metadata\":{\"labels\":{\"workflows.argoproj.io/phase\":\"Running\"}},\"spec\":{\"activeDeadlineSeconds\":300,\"podSpecPatch\":\"terminationGracePeriodSeconds: 3\\n\",\"ttlStrategy\":{\"secondsAfterCompletion\":600}},\"status\":{\"artifactRepositoryRef\":{\"artifactRepository\":{\"archiveLogs\":true,\"s3\":{\"accessKeySecret\":{\"key\":\"accesskey\",\"name\":\"my-minio-cred\"},\"bucket\":\"my-bucket\",\"endpoint\":\"minio:9000\",\"insecure\":true,\"secretKeySecret\":{\"key\":\"secretkey\",\"name\":\"my-minio-cred\"}}},\"configMap\":\"artifact-repositories\",\"key\":\"default-v1\",\"namespace\":\"argo\"},\"nodes\":{\"synchronization-wf-level-68rms\":{\"displayName\":\"synchronization-wf-level-68rms\",\"finishedAt\":null,\"id\":\"synchronization-wf-level-68rms\",\"name\":\"synchronization-wf-level-68rms\",\"phase\":\"Pending\",\"startedAt\":\"2021-09-11T15:21:57Z\",\"templateName\":\"whalesay\",\"templateScope\":\"local/synchronization-wf-level-68rms\",\"type\":\"Pod\"}},\"phase\":\"Running\",\"startedAt\":\"2021-09-11T15:21:57Z\",\"synchronization\":{\"mutex\":{\"holding\":[{\"holder\":\"synchronization-wf-level-68rms\",\"mutex\":\"argo/Mutex/test\"}]}}}}"
+ controller | time="2021-09-11T20:51:57.383Z" level=info msg="Update workflows 200"
+ controller | time="2021-09-11T20:51:57.384Z" level=info msg="Processing workflow" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:51:57.384Z" level=debug msg="Getting the template by name"
+ controller | time="2021-09-11T20:51:57.384Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.384Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.384Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.385Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.385Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.385Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.385Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.395Z" level=info msg="Workflow update successful" namespace=argo phase=Running resourceVersion=8970023 workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.396Z" level=info msg="Processing workflow" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.396Z" level=debug msg="Lock is already acquired by argo/synchronization-wf-level-68rms" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:51:57.396Z" level=debug msg="argo/synchronization-wf-level-68rms is already holding a lock" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:51:57.397Z" level=debug msg="Evaluating node synchronization-wf-level-68rms: template: *v1alpha1.WorkflowStep (whalesay), boundaryID: " namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.397Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.397Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.397Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.397Z" level=debug msg="Executing node synchronization-wf-level-68rms of Pod is Pending" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.397Z" level=debug msg="Executing node synchronization-wf-level-68rms with container template: whalesay\n" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.397Z" level=debug msg="Skipped pod synchronization-wf-level-68rms (synchronization-wf-level-68rms) creation: already exists" namespace=argo podPhase=Pending workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.397Z" level=info msg="TaskSet Reconciliation" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.397Z" level=info msg=reconcileAgentPod namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.401Z" level=info msg="Get configmaps 200"
+ controller | time="2021-09-11T20:51:57.402Z" level=info msg="resolved artifact repository" artifactRepositoryRef="argo/#"
+ controller | time="2021-09-11T20:51:57.402Z" level=debug msg="Added into queue: argo/synchronization-wf-level-2-947b5" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:51:57.403Z" level=debug msg="Current semaphore Holders. map[argo/synchronization-wf-level-68rms:true]" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:51:57.403Z" level=warning msg="Workflow processing has been postponed due to concurrency limit" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:51:57.403Z" level=info msg="Updated phase  -> Pending" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:51:57.403Z" level=info msg="Updated message  -> Waiting for argo/Mutex/test lock. Lock status: 0/1 " namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:51:57.405Z" level=debug msg="Log changes patch: {\"metadata\":{\"labels\":{\"workflows.argoproj.io/phase\":\"Pending\"}},\"spec\":{\"activeDeadlineSeconds\":300,\"podSpecPatch\":\"terminationGracePeriodSeconds: 3\\n\",\"ttlStrategy\":{\"secondsAfterCompletion\":600}},\"status\":{\"artifactRepositoryRef\":{\"artifactRepository\":{\"archiveLogs\":true,\"s3\":{\"accessKeySecret\":{\"key\":\"accesskey\",\"name\":\"my-minio-cred\"},\"bucket\":\"my-bucket\",\"endpoint\":\"minio:9000\",\"insecure\":true,\"secretKeySecret\":{\"key\":\"secretkey\",\"name\":\"my-minio-cred\"}}},\"configMap\":\"artifact-repositories\",\"key\":\"default-v1\",\"namespace\":\"argo\"},\"message\":\"Waiting for argo/Mutex/test lock. Lock status: 0/1 \",\"phase\":\"Pending\",\"synchronization\":{\"mutex\":{\"waiting\":[{\"holder\":\"argo/synchronization-wf-level-68rms\",\"mutex\":\"argo/Mutex/test\"}]}}}}"
+ controller | time="2021-09-11T20:51:57.413Z" level=info msg="Processing workflow" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.414Z" level=debug msg="Lock is already acquired by argo/synchronization-wf-level-68rms" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:51:57.414Z" level=debug msg="argo/synchronization-wf-level-68rms is already holding a lock" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:51:57.414Z" level=debug msg="Evaluating node synchronization-wf-level-68rms: template: *v1alpha1.WorkflowStep (whalesay), boundaryID: " namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.414Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.414Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.414Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.414Z" level=debug msg="Executing node synchronization-wf-level-68rms of Pod is Pending" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.414Z" level=debug msg="Executing node synchronization-wf-level-68rms with container template: whalesay\n" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.414Z" level=debug msg="Skipped pod synchronization-wf-level-68rms (synchronization-wf-level-68rms) creation: already exists" namespace=argo podPhase=Pending workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.414Z" level=info msg="TaskSet Reconciliation" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.414Z" level=info msg=reconcileAgentPod namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.443Z" level=info msg="Update workflows 200"
+ controller | time="2021-09-11T20:51:57.443Z" level=info msg="Workflow update successful" namespace=argo phase=Pending resourceVersion=8970027 workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:51:57.484Z" level=info msg="Processing workflow" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:51:57.485Z" level=debug msg="Added into queue: argo/synchronization-wf-level-2-947b5" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:51:57.485Z" level=debug msg="Current semaphore Holders. map[argo/synchronization-wf-level-68rms:true]" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:51:57.485Z" level=warning msg="Workflow processing has been postponed due to concurrency limit" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:51:57.518Z" level=info msg="Processing workflow" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.518Z" level=debug msg="Lock is already acquired by argo/synchronization-wf-level-68rms" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:51:57.518Z" level=debug msg="argo/synchronization-wf-level-68rms is already holding a lock" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:51:57.518Z" level=info msg="Updating node synchronization-wf-level-68rms message: ContainerCreating" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.518Z" level=debug msg="Evaluating node synchronization-wf-level-68rms: template: *v1alpha1.WorkflowStep (whalesay), boundaryID: " namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.518Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.518Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.519Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.519Z" level=debug msg="Executing node synchronization-wf-level-68rms of Pod is Pending" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.519Z" level=debug msg="Executing node synchronization-wf-level-68rms with container template: whalesay\n" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.519Z" level=debug msg="Skipped pod synchronization-wf-level-68rms (synchronization-wf-level-68rms) creation: already exists" namespace=argo podPhase=Pending workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.519Z" level=info msg="TaskSet Reconciliation" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.519Z" level=info msg=reconcileAgentPod namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.519Z" level=debug msg="Log changes patch: {\"status\":{\"conditions\":[{\"status\":\"False\",\"type\":\"PodRunning\"}],\"nodes\":{\"synchronization-wf-level-68rms\":{\"hostNodeName\":\"docker-desktop\",\"message\":\"ContainerCreating\"}}}}"
+ controller | time="2021-09-11T20:51:57.537Z" level=info msg="Update workflows 200"
+ controller | time="2021-09-11T20:51:57.538Z" level=info msg="Workflow update successful" namespace=argo phase=Running resourceVersion=8970031 workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.633Z" level=info msg="Processing workflow" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.634Z" level=debug msg="Lock is already acquired by argo/synchronization-wf-level-68rms" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:51:57.634Z" level=debug msg="argo/synchronization-wf-level-68rms is already holding a lock" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:51:57.634Z" level=debug msg="Evaluating node synchronization-wf-level-68rms: template: *v1alpha1.WorkflowStep (whalesay), boundaryID: " namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.634Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.634Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.634Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:51:57.634Z" level=debug msg="Executing node synchronization-wf-level-68rms of Pod is Pending" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.634Z" level=debug msg="Executing node synchronization-wf-level-68rms with container template: whalesay\n" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.634Z" level=debug msg="Skipped pod synchronization-wf-level-68rms (synchronization-wf-level-68rms) creation: already exists" namespace=argo podPhase=Pending workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.634Z" level=info msg="TaskSet Reconciliation" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:51:57.634Z" level=info msg=reconcileAgentPod namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:00.877Z" level=info msg="Get leases 200"
+ controller | time="2021-09-11T20:52:00.897Z" level=info msg="Update leases 200"
+       logs | stern -l workflows.argoproj.io/workflow 2>&1
+       logs | + synchronization-wf-level-68rms › wait
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:21:59.066Z" level=info msg="Starting Workflow Executor" executorType=pns version=untagged
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:21:59.074Z" level=info msg="Creating a pns executor"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:21:59.074Z" level=info msg="Initialized PNS executor (namespace: argo, pod: synchronization-wf-level-68rms, pid: 7)"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:21:59.074Z" level=info msg="Executor initialized" deadline="2021-09-11 15:26:57 +0000 UTC" includeScriptOutput=false namespace=argo podName=synchronization-wf-level-68rms template="{\"name\":\"whalesay\",\"inputs\":{},\"outputs\":{},\"metadata\":{},\"container\":{\"name\":\"\",\"image\":\"docker/whalesay:latest\",\"command\":[\"cowsay\"],\"args\":[\"hello world\"],\"resources\":{}},\"archiveLocation\":{\"archiveLogs\":true,\"s3\":{\"endpoint\":\"minio:9000\",\"bucket\":\"my-bucket\",\"insecure\":true,\"accessKeySecret\":{\"name\":\"my-minio-cred\",\"key\":\"accesskey\"},\"secretKeySecret\":{\"name\":\"my-minio-cred\",\"key\":\"secretkey\"},\"key\":\"synchronization-wf-level-68rms/synchronization-wf-level-68rms\"}}}" version="&Version{Version:untagged,BuildDate:2021-09-09T19:59:28Z,GitCommit:4b5d7ecfd1087f22002bc63658dc5ad3fe30927f,GitTag:untagged,GitTreeState:clean,GoVersion:go1.16.7,Compiler:gc,Platform:linux/amd64,}"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:21:59.076Z" level=info msg="Starting deadline monitor"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:03.864Z" level=info msg="secured root for pid 24 root: runc:[2:INIT] (\"/proc/24/root\")"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:03.864Z" level=info msg="mapped container name \"pid/24\" to pid 24"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:03.916Z" level=info msg="secured root for pid 24 root: cowsay (\"/proc/24/root\")"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:03.916Z" level=info msg="mapped container name \"main\" to pid 24"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.090Z" level=info msg="Watch pods 200"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.797Z" level=info msg="Main container completed"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.797Z" level=info msg="No Script output reference in workflow. Capturing script output ignored"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.797Z" level=info msg="Saving logs"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.799Z" level=info msg="Getting output of main"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.815Z" level=info msg="List pods/log 200"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.828Z" level=info msg="S3 Save path: /tmp/argo/outputs/logs/main.log, key: synchronization-wf-level-68rms/synchronization-wf-level-68rms/main.log"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.828Z" level=info msg="Creating minio client using static credentials" endpoint="minio:9000"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.828Z" level=info msg="Saving file to s3" bucket=my-bucket endpoint="minio:9000" key=synchronization-wf-level-68rms/synchronization-wf-level-68rms/main.log path=/tmp/argo/outputs/logs/main.log
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.862Z" level=info msg="not deleting local artifact" localArtPath=/tmp/argo/outputs/logs/main.log
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.862Z" level=info msg="Successfully saved file: /tmp/argo/outputs/logs/main.log"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.862Z" level=info msg="No output parameters"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.862Z" level=info msg="No output artifacts"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.862Z" level=info msg="Annotating pod with output"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.883Z" level=info msg="Patch pods 200"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.890Z" level=info msg="Killing sidecars []"
+       logs | synchronization-wf-level-68rms wait time="2021-09-11T15:22:04.891Z" level=info msg="Alloc=5795 TotalAlloc=13888 Sys=73553 NumGC=3 Goroutines=9"
+ controller | time="2021-09-11T20:52:04.864Z" level=info msg="Processing workflow" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:04.865Z" level=debug msg="Lock is already acquired by argo/synchronization-wf-level-68rms" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:04.865Z" level=debug msg="argo/synchronization-wf-level-68rms is already holding a lock" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:04.865Z" level=info msg="Updating node synchronization-wf-level-68rms status Pending -> Running" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:04.865Z" level=debug msg="Evaluating node synchronization-wf-level-68rms: template: *v1alpha1.WorkflowStep (whalesay), boundaryID: " namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:04.865Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:04.865Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:04.865Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:04.865Z" level=debug msg="Executing node synchronization-wf-level-68rms of Pod is Running" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:04.865Z" level=debug msg="Executing node synchronization-wf-level-68rms with container template: whalesay\n" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:04.865Z" level=debug msg="Skipped pod synchronization-wf-level-68rms (synchronization-wf-level-68rms) creation: already exists" namespace=argo podPhase=Running workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:04.865Z" level=info msg="TaskSet Reconciliation" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:04.865Z" level=info msg=reconcileAgentPod namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:04.865Z" level=debug msg="Log changes patch: {\"status\":{\"conditions\":[{\"status\":\"True\",\"type\":\"PodRunning\"}],\"nodes\":{\"synchronization-wf-level-68rms\":{\"message\":null,\"phase\":\"Running\"}}}}"
+ controller | time="2021-09-11T20:52:04.882Z" level=info msg="Update workflows 200"
+ controller | time="2021-09-11T20:52:04.882Z" level=info msg="Workflow update successful" namespace=argo phase=Running resourceVersion=8970053 workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:04.882Z" level=debug msg="Event(v1.ObjectReference{Kind:\"Workflow\", Namespace:\"argo\", Name:\"synchronization-wf-level-68rms\", UID:\"b0204bbd-f87e-4363-a478-1a1f5c29597c\", APIVersion:\"argoproj.io/v1alpha1\", ResourceVersion:\"8970053\", FieldPath:\"\"}): type: 'Normal' reason: 'WorkflowNodeRunning' Running node synchronization-wf-level-68rms"
+ controller | time="2021-09-11T20:52:04.893Z" level=info msg="Create events 201"
+ controller | time="2021-09-11T20:52:04.985Z" level=info msg="Processing workflow" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:04.986Z" level=debug msg="Lock is already acquired by argo/synchronization-wf-level-68rms" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:04.986Z" level=debug msg="argo/synchronization-wf-level-68rms is already holding a lock" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:04.986Z" level=debug msg="Evaluating node synchronization-wf-level-68rms: template: *v1alpha1.WorkflowStep (whalesay), boundaryID: " namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:04.986Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:04.986Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:04.986Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:04.986Z" level=debug msg="Executing node synchronization-wf-level-68rms of Pod is Running" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:04.986Z" level=debug msg="Executing node synchronization-wf-level-68rms with container template: whalesay\n" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:04.986Z" level=debug msg="Skipped pod synchronization-wf-level-68rms (synchronization-wf-level-68rms) creation: already exists" namespace=argo podPhase=Running workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:04.986Z" level=info msg="TaskSet Reconciliation" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:04.986Z" level=info msg=reconcileAgentPod namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:05.775Z" level=debug msg="Syncing all CronWorkflows"
+ controller | time="2021-09-11T20:52:05.897Z" level=info msg="Processing workflow" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:05.898Z" level=debug msg="Lock is already acquired by argo/synchronization-wf-level-68rms" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:05.898Z" level=debug msg="argo/synchronization-wf-level-68rms is already holding a lock" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:05.898Z" level=info msg="Updating node synchronization-wf-level-68rms exit code 0" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:05.898Z" level=info msg="Setting node synchronization-wf-level-68rms outputs: {\"artifacts\":[{\"name\":\"main-logs\",\"s3\":{\"key\":\"synchronization-wf-level-68rms/synchronization-wf-level-68rms/main.log\"}}]}" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:05.898Z" level=info msg="Updating node synchronization-wf-level-68rms status Running -> Succeeded" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:05.898Z" level=debug msg="Evaluating node synchronization-wf-level-68rms: template: *v1alpha1.WorkflowStep (whalesay), boundaryID: " namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:05.898Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:05.898Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:05.898Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-68rms)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:05.898Z" level=debug msg="Node synchronization-wf-level-68rms already completed" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:05.898Z" level=info msg="TaskSet Reconciliation" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:05.898Z" level=info msg=reconcileAgentPod namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:05.898Z" level=info msg="Updated phase Running -> Succeeded" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:05.898Z" level=info msg="Marking workflow completed" namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:05.898Z" level=info msg="Checking daemoned children of " namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:05.898Z" level=debug msg="Event(v1.ObjectReference{Kind:\"Workflow\", Namespace:\"argo\", Name:\"synchronization-wf-level-68rms\", UID:\"b0204bbd-f87e-4363-a478-1a1f5c29597c\", APIVersion:\"argoproj.io/v1alpha1\", ResourceVersion:\"8970053\", FieldPath:\"\"}): type: 'Normal' reason: 'WorkflowSucceeded' Workflow completed"
+ controller | time="2021-09-11T20:52:05.899Z" level=debug msg="Log changes patch: {\"metadata\":{\"labels\":{\"workflows.argoproj.io/completed\":\"true\",\"workflows.argoproj.io/phase\":\"Succeeded\"}},\"status\":{\"conditions\":[{\"status\":\"False\",\"type\":\"PodRunning\"},{\"status\":\"True\",\"type\":\"Completed\"}],\"finishedAt\":\"2021-09-11T15:22:05Z\",\"nodes\":{\"synchronization-wf-level-68rms\":{\"finishedAt\":\"2021-09-11T15:22:04Z\",\"outputs\":{\"artifacts\":[{\"name\":\"main-logs\",\"s3\":{\"key\":\"synchronization-wf-level-68rms/synchronization-wf-level-68rms/main.log\"}}],\"exitCode\":\"0\"},\"phase\":\"Succeeded\",\"resourcesDuration\":{\"cpu\":6,\"memory\":3}}},\"phase\":\"Succeeded\"}}"
+ controller | time="2021-09-11T20:52:05.899Z" level=info msg="Lock has been released by argo/synchronization-wf-level-68rms. Available locks: 1" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:05.899Z" level=debug msg="Enqueue the workflow argo/synchronization-wf-level-2-947b5" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:05.899Z" level=info msg="argo/synchronization-wf-level-68rms released a lock from argo/Mutex/test"
+ controller | time="2021-09-11T20:52:05.899Z" level=info msg="Released all acquired locks" key=synchronization-wf-level-68rms namespace=argo workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:05.908Z" level=info msg="Get leases 200"
+ controller | time="2021-09-11T20:52:05.922Z" level=info msg="Create events 201"
+ controller | time="2021-09-11T20:52:05.927Z" level=info msg="Update leases 200"
+ controller | time="2021-09-11T20:52:05.929Z" level=info msg="Update workflows 200"
+ controller | time="2021-09-11T20:52:05.929Z" level=info msg="Workflow update successful" namespace=argo phase=Succeeded resourceVersion=8970059 workflow=synchronization-wf-level-68rms
+ controller | time="2021-09-11T20:52:05.929Z" level=debug msg="Event(v1.ObjectReference{Kind:\"Workflow\", Namespace:\"argo\", Name:\"synchronization-wf-level-68rms\", UID:\"b0204bbd-f87e-4363-a478-1a1f5c29597c\", APIVersion:\"argoproj.io/v1alpha1\", ResourceVersion:\"8970059\", FieldPath:\"\"}): type: 'Normal' reason: 'WorkflowNodeSucceeded' Succeeded node synchronization-wf-level-68rms"
+ controller | time="2021-09-11T20:52:05.931Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-68rms for delete in 10m0s"
+ controller | time="2021-09-11T20:52:05.933Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-68rms for delete in 10m0s"
+ controller | time="2021-09-11T20:52:05.935Z" level=info msg="cleaning up pod" action=labelPodCompleted key=argo/synchronization-wf-level-68rms/labelPodCompleted
+ controller | time="2021-09-11T20:52:05.941Z" level=info msg="Create events 201"
+ controller | time="2021-09-11T20:52:05.949Z" level=info msg="Patch pods 200"
+ controller | time="2021-09-11T20:52:05.999Z" level=info msg="Processing workflow" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.000Z" level=debug msg="Added into queue: argo/synchronization-wf-level-2-947b5" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:06.000Z" level=info msg="argo/Mutex/test acquired by argo/synchronization-wf-level-2-947b5 " mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:06.000Z" level=info msg="Updated phase Pending -> Running" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.000Z" level=info msg="Updated message Waiting for argo/Mutex/test lock. Lock status: 0/1  -> " namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.000Z" level=debug msg="Evaluating node synchronization-wf-level-2-947b5: template: *v1alpha1.WorkflowStep (whalesay), boundaryID: " namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.000Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:06.000Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:06.000Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:06.000Z" level=debug msg="Event(v1.ObjectReference{Kind:\"Workflow\", Namespace:\"argo\", Name:\"synchronization-wf-level-2-947b5\", UID:\"8444aef8-b41e-4a09-be29-7206326d2432\", APIVersion:\"argoproj.io/v1alpha1\", ResourceVersion:\"8970027\", FieldPath:\"\"}): type: 'Normal' reason: 'WorkflowRunning' Workflow Running"
+ controller | time="2021-09-11T20:52:06.000Z" level=debug msg="Initializing node synchronization-wf-level-2-947b5: template: *v1alpha1.WorkflowStep (whalesay), boundaryID: " namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.000Z" level=info msg="Pod node synchronization-wf-level-2-947b5 initialized Pending" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.000Z" level=debug msg="Executing node synchronization-wf-level-2-947b5 with container template: whalesay\n" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.000Z" level=debug namespace=argo needLocation=true workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.001Z" level=debug msg="Creating Pod: synchronization-wf-level-2-947b5 (synchronization-wf-level-2-947b5)" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.009Z" level=info msg="Create pods 201"
+ controller | time="2021-09-11T20:52:06.010Z" level=info msg="Created pod: synchronization-wf-level-2-947b5 (synchronization-wf-level-2-947b5)" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.010Z" level=info msg="TaskSet Reconciliation" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.010Z" level=info msg=reconcileAgentPod namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.010Z" level=debug msg="Log changes patch: {\"metadata\":{\"labels\":{\"workflows.argoproj.io/phase\":\"Running\"}},\"status\":{\"conditions\":[{\"status\":\"False\",\"type\":\"PodRunning\"}],\"message\":null,\"nodes\":{\"synchronization-wf-level-2-947b5\":{\"displayName\":\"synchronization-wf-level-2-947b5\",\"finishedAt\":null,\"id\":\"synchronization-wf-level-2-947b5\",\"name\":\"synchronization-wf-level-2-947b5\",\"phase\":\"Pending\",\"startedAt\":\"2021-09-11T15:22:06Z\",\"templateName\":\"whalesay\",\"templateScope\":\"local/synchronization-wf-level-2-947b5\",\"type\":\"Pod\"}},\"phase\":\"Running\",\"startedAt\":\"2021-09-11T15:22:06Z\",\"synchronization\":{\"mutex\":{\"holding\":[{\"holder\":\"synchronization-wf-level-2-947b5\",\"mutex\":\"argo/Mutex/test\"}]}}}}"
+ controller | time="2021-09-11T20:52:06.021Z" level=info msg="Create events 201"
+ controller | time="2021-09-11T20:52:06.032Z" level=info msg="Update workflows 200"
+ controller | time="2021-09-11T20:52:06.033Z" level=info msg="Workflow update successful" namespace=argo phase=Running resourceVersion=8970065 workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.114Z" level=info msg="Processing workflow" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.114Z" level=debug msg="Lock is already acquired by argo/synchronization-wf-level-2-947b5" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:06.114Z" level=debug msg="argo/synchronization-wf-level-2-947b5 is already holding a lock" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:06.114Z" level=info msg="Updating node synchronization-wf-level-2-947b5 message: ContainerCreating" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.114Z" level=debug msg="Evaluating node synchronization-wf-level-2-947b5: template: *v1alpha1.WorkflowStep (whalesay), boundaryID: " namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.114Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:06.114Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:06.114Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:06.114Z" level=debug msg="Executing node synchronization-wf-level-2-947b5 of Pod is Pending" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.115Z" level=debug msg="Executing node synchronization-wf-level-2-947b5 with container template: whalesay\n" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.115Z" level=debug msg="Skipped pod synchronization-wf-level-2-947b5 (synchronization-wf-level-2-947b5) creation: already exists" namespace=argo podPhase=Pending workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.115Z" level=info msg="TaskSet Reconciliation" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.115Z" level=info msg=reconcileAgentPod namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:06.115Z" level=debug msg="Log changes patch: {\"status\":{\"nodes\":{\"synchronization-wf-level-2-947b5\":{\"hostNodeName\":\"docker-desktop\",\"message\":\"ContainerCreating\"}}}}"
+ controller | time="2021-09-11T20:52:06.134Z" level=info msg="Update workflows 200"
+ controller | time="2021-09-11T20:52:06.135Z" level=info msg="Workflow update successful" namespace=argo phase=Running resourceVersion=8970069 workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:10.933Z" level=info msg="Get leases 200"
+ controller | time="2021-09-11T20:52:10.943Z" level=info msg="Update leases 200"
+       logs | + synchronization-wf-level-2-947b5 › wait
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:07.450Z" level=info msg="Starting Workflow Executor" executorType=pns version=untagged
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:07.457Z" level=info msg="Creating a pns executor"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:07.457Z" level=info msg="Initialized PNS executor (namespace: argo, pod: synchronization-wf-level-2-947b5, pid: 9)"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:07.457Z" level=info msg="Executor initialized" deadline="0001-01-01 00:00:00 +0000 UTC" includeScriptOutput=false namespace=argo podName=synchronization-wf-level-2-947b5 template="{\"name\":\"whalesay\",\"inputs\":{},\"outputs\":{},\"metadata\":{},\"container\":{\"name\":\"\",\"image\":\"docker/whalesay:latest\",\"command\":[\"cowsay\"],\"args\":[\"hello world\"],\"resources\":{}},\"archiveLocation\":{\"archiveLogs\":true,\"s3\":{\"endpoint\":\"minio:9000\",\"bucket\":\"my-bucket\",\"insecure\":true,\"accessKeySecret\":{\"name\":\"my-minio-cred\",\"key\":\"accesskey\"},\"secretKeySecret\":{\"name\":\"my-minio-cred\",\"key\":\"secretkey\"},\"key\":\"synchronization-wf-level-2-947b5/synchronization-wf-level-2-947b5\"}}}" version="&Version{Version:untagged,BuildDate:2021-09-09T19:59:28Z,GitCommit:4b5d7ecfd1087f22002bc63658dc5ad3fe30927f,GitTag:untagged,GitTreeState:clean,GoVersion:go1.16.7,Compiler:gc,Platform:linux/amd64,}"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:07.458Z" level=info msg="Starting deadline monitor"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:11.700Z" level=info msg="secured root for pid 28 root: runc:[2:INIT] (\"/proc/28/root\")"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:11.700Z" level=info msg="mapped container name \"pid/28\" to pid 28"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:11.752Z" level=info msg="secured root for pid 28 root: runc:[2:INIT] (\"/proc/28/root\")"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:11.803Z" level=info msg="secured root for pid 28 root: cowsay (\"/proc/28/root\")"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:11.803Z" level=info msg="mapped container name \"main\" to pid 28"
+ controller | time="2021-09-11T20:52:12.189Z" level=info msg="Processing workflow" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:12.189Z" level=debug msg="Lock is already acquired by argo/synchronization-wf-level-2-947b5" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:12.189Z" level=debug msg="argo/synchronization-wf-level-2-947b5 is already holding a lock" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:12.189Z" level=info msg="Updating node synchronization-wf-level-2-947b5 status Pending -> Running" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:12.189Z" level=debug msg="Evaluating node synchronization-wf-level-2-947b5: template: *v1alpha1.WorkflowStep (whalesay), boundaryID: " namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:12.189Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:12.189Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:12.189Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:12.189Z" level=debug msg="Executing node synchronization-wf-level-2-947b5 of Pod is Running" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:12.189Z" level=debug msg="Executing node synchronization-wf-level-2-947b5 with container template: whalesay\n" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:12.189Z" level=debug msg="Skipped pod synchronization-wf-level-2-947b5 (synchronization-wf-level-2-947b5) creation: already exists" namespace=argo podPhase=Running workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:12.190Z" level=info msg="TaskSet Reconciliation" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:12.190Z" level=info msg=reconcileAgentPod namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:12.190Z" level=debug msg="Log changes patch: {\"status\":{\"conditions\":[{\"status\":\"True\",\"type\":\"PodRunning\"}],\"nodes\":{\"synchronization-wf-level-2-947b5\":{\"message\":null,\"phase\":\"Running\"}}}}"
+ controller | time="2021-09-11T20:52:12.201Z" level=info msg="Update workflows 200"
+ controller | time="2021-09-11T20:52:12.202Z" level=info msg="Workflow update successful" namespace=argo phase=Running resourceVersion=8970090 workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:12.202Z" level=debug msg="Event(v1.ObjectReference{Kind:\"Workflow\", Namespace:\"argo\", Name:\"synchronization-wf-level-2-947b5\", UID:\"8444aef8-b41e-4a09-be29-7206326d2432\", APIVersion:\"argoproj.io/v1alpha1\", ResourceVersion:\"8970090\", FieldPath:\"\"}): type: 'Normal' reason: 'WorkflowNodeRunning' Running node synchronization-wf-level-2-947b5"
+ controller | time="2021-09-11T20:52:12.209Z" level=info msg="Create events 201"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.439Z" level=info msg="Watch pods 200"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.457Z" level=info msg="Main container completed"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.457Z" level=info msg="No Script output reference in workflow. Capturing script output ignored"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.457Z" level=info msg="Saving logs"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.467Z" level=info msg="Getting output of main"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.481Z" level=info msg="List pods/log 200"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.488Z" level=info msg="S3 Save path: /tmp/argo/outputs/logs/main.log, key: synchronization-wf-level-2-947b5/synchronization-wf-level-2-947b5/main.log"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.488Z" level=info msg="Creating minio client using static credentials" endpoint="minio:9000"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.488Z" level=info msg="Saving file to s3" bucket=my-bucket endpoint="minio:9000" key=synchronization-wf-level-2-947b5/synchronization-wf-level-2-947b5/main.log path=/tmp/argo/outputs/logs/main.log
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.503Z" level=info msg="not deleting local artifact" localArtPath=/tmp/argo/outputs/logs/main.log
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.503Z" level=info msg="Successfully saved file: /tmp/argo/outputs/logs/main.log"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.503Z" level=info msg="No output parameters"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.503Z" level=info msg="No output artifacts"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.503Z" level=info msg="Annotating pod with output"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.525Z" level=info msg="Patch pods 200"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.531Z" level=info msg="Killing sidecars []"
+       logs | synchronization-wf-level-2-947b5 wait time="2021-09-11T15:22:12.531Z" level=info msg="Alloc=6218 TotalAlloc=13978 Sys=73553 NumGC=4 Goroutines=9"
+ controller | time="2021-09-11T20:52:12.622Z" level=info msg="Processing workflow" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:12.623Z" level=debug msg="Lock is already acquired by argo/synchronization-wf-level-2-947b5" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:12.623Z" level=debug msg="argo/synchronization-wf-level-2-947b5 is already holding a lock" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:12.623Z" level=debug msg="Evaluating node synchronization-wf-level-2-947b5: template: *v1alpha1.WorkflowStep (whalesay), boundaryID: " namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:12.623Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:12.623Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:12.623Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:12.623Z" level=debug msg="Executing node synchronization-wf-level-2-947b5 of Pod is Running" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:12.624Z" level=debug msg="Executing node synchronization-wf-level-2-947b5 with container template: whalesay\n" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:12.624Z" level=debug msg="Skipped pod synchronization-wf-level-2-947b5 (synchronization-wf-level-2-947b5) creation: already exists" namespace=argo podPhase=Running workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:12.624Z" level=info msg="TaskSet Reconciliation" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:12.624Z" level=info msg=reconcileAgentPod namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:13.254Z" level=info msg="Processing workflow" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:13.254Z" level=debug msg="Lock is already acquired by argo/synchronization-wf-level-2-947b5" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:13.254Z" level=debug msg="argo/synchronization-wf-level-2-947b5 is already holding a lock" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:13.254Z" level=info msg="Updating node synchronization-wf-level-2-947b5 exit code 0" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:13.254Z" level=info msg="Setting node synchronization-wf-level-2-947b5 outputs: {\"artifacts\":[{\"name\":\"main-logs\",\"s3\":{\"key\":\"synchronization-wf-level-2-947b5/synchronization-wf-level-2-947b5/main.log\"}}]}" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:13.254Z" level=info msg="Updating node synchronization-wf-level-2-947b5 status Running -> Succeeded" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:13.255Z" level=debug msg="Evaluating node synchronization-wf-level-2-947b5: template: *v1alpha1.WorkflowStep (whalesay), boundaryID: " namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:13.255Z" level=debug msg="Resolving the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:13.255Z" level=debug msg="Getting the template" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:13.255Z" level=debug msg="Getting the template by name" base="*v1alpha1.Workflow (namespace=argo,name=synchronization-wf-level-2-947b5)" depth=0 tmpl="*v1alpha1.WorkflowStep (whalesay)"
+ controller | time="2021-09-11T20:52:13.255Z" level=debug msg="Node synchronization-wf-level-2-947b5 already completed" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:13.255Z" level=info msg="TaskSet Reconciliation" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:13.255Z" level=info msg=reconcileAgentPod namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:13.255Z" level=info msg="Updated phase Running -> Succeeded" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:13.255Z" level=info msg="Marking workflow completed" namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:13.255Z" level=info msg="Checking daemoned children of " namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:13.255Z" level=debug msg="Event(v1.ObjectReference{Kind:\"Workflow\", Namespace:\"argo\", Name:\"synchronization-wf-level-2-947b5\", UID:\"8444aef8-b41e-4a09-be29-7206326d2432\", APIVersion:\"argoproj.io/v1alpha1\", ResourceVersion:\"8970090\", FieldPath:\"\"}): type: 'Normal' reason: 'WorkflowSucceeded' Workflow completed"
+ controller | time="2021-09-11T20:52:13.255Z" level=debug msg="Log changes patch: {\"metadata\":{\"labels\":{\"workflows.argoproj.io/completed\":\"true\",\"workflows.argoproj.io/phase\":\"Succeeded\"}},\"status\":{\"conditions\":[{\"status\":\"False\",\"type\":\"PodRunning\"},{\"status\":\"True\",\"type\":\"Completed\"}],\"finishedAt\":\"2021-09-11T15:22:13Z\",\"nodes\":{\"synchronization-wf-level-2-947b5\":{\"finishedAt\":\"2021-09-11T15:22:12Z\",\"outputs\":{\"artifacts\":[{\"name\":\"main-logs\",\"s3\":{\"key\":\"synchronization-wf-level-2-947b5/synchronization-wf-level-2-947b5/main.log\"}}],\"exitCode\":\"0\"},\"phase\":\"Succeeded\",\"resourcesDuration\":{\"cpu\":5,\"memory\":3}}},\"phase\":\"Succeeded\"}}"
+ controller | time="2021-09-11T20:52:13.255Z" level=info msg="Lock has been released by argo/synchronization-wf-level-2-947b5. Available locks: 1" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:13.255Z" level=info msg="argo/synchronization-wf-level-2-947b5 released a lock from argo/Mutex/test"
+ controller | time="2021-09-11T20:52:13.255Z" level=debug msg="Removed from queue: argo/synchronization-wf-level-2-947b5" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:13.255Z" level=info msg="Released all acquired locks" key=synchronization-wf-level-2-947b5 namespace=argo workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:13.265Z" level=info msg="Create events 201"
+ controller | time="2021-09-11T20:52:13.276Z" level=info msg="Update workflows 200"
+ controller | time="2021-09-11T20:52:13.277Z" level=info msg="Workflow update successful" namespace=argo phase=Succeeded resourceVersion=8970096 workflow=synchronization-wf-level-2-947b5
+ controller | time="2021-09-11T20:52:13.277Z" level=debug msg="Event(v1.ObjectReference{Kind:\"Workflow\", Namespace:\"argo\", Name:\"synchronization-wf-level-2-947b5\", UID:\"8444aef8-b41e-4a09-be29-7206326d2432\", APIVersion:\"argoproj.io/v1alpha1\", ResourceVersion:\"8970096\", FieldPath:\"\"}): type: 'Normal' reason: 'WorkflowNodeSucceeded' Succeeded node synchronization-wf-level-2-947b5"
+ controller | time="2021-09-11T20:52:13.277Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-2-947b5 for delete in 10m0s"
+ controller | time="2021-09-11T20:52:13.277Z" level=info msg="argo/synchronization-wf-level-2-947b5 released a lock from argo/Mutex/test"
+ controller | time="2021-09-11T20:52:13.277Z" level=debug msg="Removed from queue: argo/synchronization-wf-level-2-947b5" mutex=argo/Mutex/test
+ controller | time="2021-09-11T20:52:13.282Z" level=info msg="cleaning up pod" action=labelPodCompleted key=argo/synchronization-wf-level-2-947b5/labelPodCompleted
+ controller | time="2021-09-11T20:52:13.282Z" level=info msg="Queueing Succeeded workflow argo/synchronization-wf-level-2-947b5 for delete in 10m0s"
+ controller | time="2021-09-11T20:52:13.294Z" level=info msg="Create events 201"
+ controller | time="2021-09-11T20:52:13.308Z" level=info msg="Patch pods 200"
+ controller | time="2021-09-11T20:52:15.002Z" level=info msg="Deleting TTL expired workflow 'argo/synchronization-wf-level-ml8kh'"
+ controller | time="2021-09-11T20:52:15.026Z" level=info msg="Delete workflows 200"
+ controller | time="2021-09-11T20:52:15.026Z" level=info msg="Successfully deleted 'argo/synchronization-wf-level-ml8kh'"
+ controller | time="2021-09-11T20:52:15.775Z" level=debug msg="Syncing all CronWorkflows"
+ controller | time="2021-09-11T20:52:15.952Z" level=info msg="Get leases 200"
+ controller | time="2021-09-11T20:52:15.965Z" level=info msg="Update leases 200"
+ controller | time="2021-09-11T20:52:20.971Z" level=info msg="Get leases 200"
+ controller | time="2021-09-11T20:52:20.986Z" level=info msg="Update leases 200"
+ controller | time="2021-09-11T20:52:24.003Z" level=info msg="Deleting TTL expired workflow 'argo/synchronization-wf-level-m4lsh'"
+ controller | time="2021-09-11T20:52:24.020Z" level=info msg="Delete workflows 200"
+ controller | time="2021-09-11T20:52:24.020Z" level=info msg="Successfully deleted 'argo/synchronization-wf-level-m4lsh'"
+ controller | time="2021-09-11T20:52:25.776Z" level=debug msg="Syncing all CronWorkflows"
+ controller | time="2021-09-11T20:52:25.995Z" level=info msg="Get leases 200"
+ controller | time="2021-09-11T20:52:26.010Z" level=info msg="Update leases 200"
+ controller | time="2021-09-11T20:52:31.019Z" level=info msg="Get leases 200"
+ controller | time="2021-09-11T20:52:31.028Z" level=info msg="Update leases 200"
